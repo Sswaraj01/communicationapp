@@ -15,15 +15,6 @@ export default class Main extends React.Component { // Exporting a component
         return <div>
             <h1>Main Class Component </h1>
             <Welcome />
-            <Login />
-            <Register />
-            <LoginSuccessful />
-            <RegisterSuccessful />
-            <ChatList/>
-            <UserList />
-            <EditUser />
-            <DocumentList />
-            <Logout />
         </div>
     }
 }
