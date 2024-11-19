@@ -1,5 +1,5 @@
 const LoginSuccessful = () => {
-    return (<h1>LoginSuccessful Functional Component</h1>);
+    return (<h1></h1>);
 }
 
 export default LoginSuccessful;
