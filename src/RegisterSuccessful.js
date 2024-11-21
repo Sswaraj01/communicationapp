@@ -1,5 +1,5 @@
 const RegisterSuccessful = () => {
-    return (<h1>RegisterSuccessful Functional Component</h1>);
+    return (<h1>You are successfully registered</h1>);
 }
 
 export default RegisterSuccessful;

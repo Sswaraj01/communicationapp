@@ -79,7 +79,7 @@ function Nav() {
                       </Link>
                     </div>
                   ) : (
-                    <Link to="/login">Login</Link> // Show login link if no user is logged in
+                    <Link className="nav-link" to="/login">Login</Link> // Show login link if no user is logged in
                   )}
                 </div>
               </li>
