@@ -5,7 +5,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loggeduser,setLoggedUser] = useState([]);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -32,13 +31,7 @@ const Login = () => {
 
   
 
-/*
-    JSON.stringify - convert object into string
-    JSON.parse - convert string into object
-*/
-let loggedinuser = localStorage.getItem("loggeduser") ? JSON.parse(localStorage.getItem("loggeduser")) : []; // ternary operator
-loggeduser.push(loggedInuser); // adding item inside array
-localStorage.setItem("loggeduser", JSON.stringify(loggedinuser));
+
 
 
   return (
