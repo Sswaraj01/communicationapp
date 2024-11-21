@@ -35,10 +35,10 @@ const Login = () => {
 
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Login</h1>
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
+      <h1>Welcome to CommunicationApp</h1>
       <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "20px" }}>
           <input
             type="email"
             placeholder="Email"
@@ -47,7 +47,7 @@ const Login = () => {
             required
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: "20px" }}>
           <input
             type="password"
             placeholder="Password"
@@ -57,7 +57,7 @@ const Login = () => {
           />
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Login</button>
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
     </div>
   );

@@ -5,6 +5,20 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loggedUser, setLoggedUser] = useState(null); // State to store logged user details
+
+  useEffect(() => {
+    // Retrieve logged user details from localStorage
+    const user = localStorage.getItem("loggeduser");
+    if (user) {
+      try {
+        const parsedUser = JSON.parse(user);
+        setLoggedUser(parsedUser.email);
+      } catch (error) {
+        console.error("Error parsing loggedUser:", error);
+      }// Parse JSON string to object
+    }
+  }, []); // Run
   useEffect(() => {
     // Call GET API and update state
     let localUsers = JSON.parse(localStorage.getItem("users"));
@@ -15,6 +29,16 @@ const UserList = () => {
 
   const goToEditUser = (user) => {
     navigate("/edituser", { state: { user } });
+  };
+
+  const checkLoggedUser = (user) => {
+    console.log(user);
+    console.log(loggedUser);
+    if(loggedUser===user.email){
+      return true;
+    }else{
+      return false;
+    }
   };
 
   const handleDeleteClick = (user) => {
@@ -53,10 +77,36 @@ const UserList = () => {
                 <td>{item.fullname}</td>
                 <td>{item.email}</td>
                 <td>
+                {checkLoggedUser(item)? (
+                    <>
+                    <span>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => goToEditUser(item)}
+                      disabled
+                    >
+                      Edit
+                    </button> 
+                  </span>
+                  <span> | </span>
                   <span>
                     <button
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      disabled
+                    >
+                      Delete
+                    </button>
+                  </span></>
+                  ) : (
+                    <>
+                    <span>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
                       onClick={() => goToEditUser(item)}
                     >
                       Edit
@@ -66,14 +116,16 @@ const UserList = () => {
                   <span>
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      className="btn btn-danger"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                       onClick={() => handleDeleteClick(item)}
                     >
                       Delete
                     </button>
-                  </span>
+                  </span></> // Show login link if no user is logged in
+                  )}
+                 
                 </td>
               </tr>
             ))}

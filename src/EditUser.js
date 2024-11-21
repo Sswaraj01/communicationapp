@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const EditUser = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const [loggedUser, setLoggedUser] = useState(null);
   // Destructure user data from location state
   const { user } = location.state;
 
@@ -12,6 +12,13 @@ const EditUser = () => {
     fullname: user.fullname,
     email: user.email,
   });
+
+  useEffect(() => {
+    // Retrieve logged user details from localStorage
+    const loggedinuser = JSON.parse(localStorage.getItem("loggeduser"))
+    setLoggedUser(loggedinuser);
+    
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +38,10 @@ const EditUser = () => {
         ? { ...u, fullname: userData.fullname, email: userData.email }
         : u
     );
+
+    if(user.email===loggedUser.email){
+      
+    }
 
     // Save the updated users list back to localStorage
     localStorage.setItem("users", JSON.stringify(users));

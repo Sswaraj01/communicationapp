@@ -52,7 +52,7 @@ const GroupChat = () => {
   return (
     <div
       style={{
-        display: "flex",
+        
         flexDirection: "column",
         height: "100vh",
         margin: 0,
@@ -110,7 +110,6 @@ const GroupChat = () => {
       {/* Input and Buttons */}
       <div
         style={{
-          display: "flex",
           padding: "10px",
           backgroundColor: "#FFF",
           borderTop: "1px solid #DDD",
