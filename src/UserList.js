@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     // Call GET API and update state
     let localUsers = JSON.parse(localStorage.getItem("users"));
@@ -12,10 +14,26 @@ const UserList = () => {
   const navigate = useNavigate();
 
   const goToEditUser = (user) => {
-    navigate("/edituser",{ state: { user } });
+    navigate("/edituser", { state: { user } });
   };
 
-  
+  const handleDeleteClick = (user) => {
+    setSelectedUser(user);
+    setShowModal(true); // Open the confirmation modal
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
+    setSelectedUser(null);
+  };
+
+  const handleConfirmDelete = () => {
+    const updatedUsers = users.filter((u) => u.id !== selectedUser.id);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUsers(updatedUsers);
+    setShowModal(false);
+    setSelectedUser(null);
+  };
 
   return (
     <div className="table-responsive">
@@ -36,13 +54,23 @@ const UserList = () => {
                 <td>{item.email}</td>
                 <td>
                   <span>
-                    <button type="button" class="btn btn-primary" onClick={() => goToEditUser(item)} >
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      onClick={() => goToEditUser(item)}
+                    >
                       Edit
                     </button>
                   </span>
                   <span> | </span>
                   <span>
-                    <button type="button" class="btn btn-danger">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      onClick={() => handleDeleteClick(item)}
+                    >
                       Delete
                     </button>
                   </span>
@@ -51,6 +79,48 @@ const UserList = () => {
             ))}
           </tbody>
         </table>
+        <div
+          className="modal fade"
+          id="exampleModal"
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  Confirm User Deletion
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">Are you Sure?</div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  onClick={handleConfirmDelete}
+                >
+                  OK
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  onClick={handleCancelDelete}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </>
     </div>
   );

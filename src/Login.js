@@ -1,46 +1,73 @@
-import { Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-    return (<><h1>Login</h1>
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loggeduser,setLoggedUser] = useState([]);
+  const navigate = useNavigate();
 
-    <Form>
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // Fetch user details from localStorage
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    
+    // Check if user exists
+    const user = storedUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (user) {
+      // Clear error and navigate to LoginSuccess
       
-        <div class="mb-3">
-            <label for="" class="form-label">Email</label>
-            <input
-                type="email"
-                class="form-control"
-                name=""
-                id=""
-                aria-describedby="helpId"
-                placeholder="Enter a valid email"
-                
-            />
-        </div>
-       <div class="mb-3">
-            <label for="" class="form-label">Password</label>
-            <input
-                type="password"
-                class="form-control"
-                name=""
-                id=""
-                placeholder="Enter your password"
-            />
-        </div>
-        <div>
-            <button
-                type="button"
-                class="btn btn-primary"
-            >
-                Login
-            </button>
-            
-        </div>
-      
-        
-    </Form>
+      setError("");
+      navigate("/loginsuccess", { state: { user } });
+    } else {
+      // Set error message
+      setError("Invalid email or password.");
+    }
+  };
 
-    </>);
-}
+  
+
+/*
+    JSON.stringify - convert object into string
+    JSON.parse - convert string into object
+*/
+let loggedinuser = localStorage.getItem("loggeduser") ? JSON.parse(localStorage.getItem("loggeduser")) : []; // ternary operator
+loggeduser.push(loggedInuser); // adding item inside array
+localStorage.setItem("loggeduser", JSON.stringify(loggedinuser));
+
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Login</h1>
+      <form onSubmit={handleLogin}>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div style={{ marginBottom: "10px" }}>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
 
 export default Login;

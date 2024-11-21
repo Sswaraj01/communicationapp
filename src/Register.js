@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 const Register = () => {
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault(); // stop page refresh
+    
     console.log(event);
     console.log(event.target);
 
@@ -26,62 +28,63 @@ const Register = () => {
     let users = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : []; // ternary operator
     users.push(user); // adding item inside array
     localStorage.setItem("users", JSON.stringify(users));
+    navigate("/registersuccess");
 }
   return (
     <>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <div class="mb-3">
-          <label for="" class="form-label">
+        <div className="mb-3">
+          <label for="" className="form-label">
             Full Name
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             name=""
             id=""
             aria-describedby="helpId"
             placeholder="Enter your full Name"
           />
         </div>
-        <div class="mb-3">
-          <label for="" class="form-label">
+        <div className="mb-3">
+          <label for="" className="form-label">
             Email
           </label>
           <input
             type="email"
-            class="form-control"
+            className="form-control"
             name=""
             id=""
             aria-describedby="emailHelpId"
             placeholder="abc@mail.com"
           />
         </div>
-        <div class="mb-3">
-          <label for="" class="form-label">
+        <div className="mb-3">
+          <label for="" className="form-label">
             Password
           </label>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             name=""
             id=""
             placeholder=""
           />
         </div>
-        <div class="mb-3">
-          <label for="" class="form-label">
+        <div className="mb-3">
+          <label for="" className="form-label">
             Confirm Password
           </label>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             name=""
             id=""
             placeholder=""
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary" >
           Register
         </button>
         '
